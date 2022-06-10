@@ -30,16 +30,19 @@ export const MintButton = ({
     candyMachine,
     isMinting,
     userHasWhitelistToken,
-
+    loading
 }: {
     onMint: () => Promise<void>;
     candyMachine?: CandyMachineAccount;
     isMinting: boolean;
     userHasWhitelistToken: boolean;
-
+    loading: boolean;
 }) => {
+
     const { requestGatewayToken, gatewayStatus } = useGateway();
     const [clicked, setClicked] = useState(false);
+    
+
 
     useEffect(() => {
         if (gatewayStatus === GatewayStatus.ACTIVE && clicked) {
@@ -53,22 +56,24 @@ export const MintButton = ({
             return 'SOLD OUT';
         } else if (isMinting) {
             return <Spinner animation="border" variant="secondary" />;
-        } else if (!userHasWhitelistToken && candyMachine?.state.isPresale) {
-            return 'NOT ON WHITELIST';
+        } else if (!userHasWhitelistToken) {
+            return 'PRESALE MINT';
         } else if (candyMachine?.state.isPresale) {
             return 'PRESALE MINT';
+        }else if (loading){
+            return <Spinner animation="border" variant="secondary" />;
+
         }
-        console.log(userHasWhitelistToken);
         return 'MINT';
     };
 
     return (
         <CTAButton
-            disabled={
+            disabled={!userHasWhitelistToken ||
                 candyMachine?.state.isSoldOut ||
                 isMinting ||
                 !candyMachine?.state.isActive ||
-                (!userHasWhitelistToken && candyMachine?.state.isPresale)
+                (candyMachine?.state.isPresale)
             }
             onClick={async () => {
                 setClicked(true);
@@ -89,3 +94,4 @@ export const MintButton = ({
         </CTAButton>
     );
 };
+

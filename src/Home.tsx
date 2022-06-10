@@ -10,9 +10,9 @@ import Col from 'react-bootstrap/Col';
 import { PublicKey } from '@solana/web3.js';
 import { useWallet } from '@solana/wallet-adapter-react';
 
-import {Snackbar } from "@material-ui/core";
+import { Snackbar } from '@material-ui/core';
 
-import Alert from "@material-ui/lab/Alert";
+import Alert from '@material-ui/lab/Alert';
 
 import {
     awaitTransactionSignatureConfirmation,
@@ -22,17 +22,16 @@ import {
     mintOneToken,
 } from './utils/candy-machine';
 import { AlertState } from './utils/utils';
-import { checkWLToken } from './utils/checkWLWallet';
+import { checkWLWallet,  } from './utils/checkWLWallet';
 import { Header } from './components/Header';
 import { MintButton } from './components/MintButton';
 import { GatewayProvider } from '@civic/solana-gateway-react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { usePoller } from './hooks/usePoller';
-// import { Snackbar } from '@material-ui/core';
-// import { Alert } from 'react-bootstrap'; 
 
-const IMAGE_LINK = '/mint.jpeg';
-const LOGO_LINK = '/logo.png';
+const IMAGE_LINK = '/mint.png';
+const LOGO_LINK = '/cynova-launch.png';
+
 
 const ConnectButton = styled(WalletMultiButton)`
     width: 100%;
@@ -47,7 +46,7 @@ const ConnectButton = styled(WalletMultiButton)`
 
 const StyledPaper = styled(Card)`
     padding: 20px;
-    background-color: #364038;
+    background-color: #000000;
     border-radius: 6px;
     margin: 10px;
 `;
@@ -62,8 +61,9 @@ export interface HomeProps {
 }
 
 const Home = (props: HomeProps) => {
-    const [wlmintTimes, setMintTimes] = useState(0);
     const [isUserMinting, setIsUserMinting] = useState(false);
+    const [wlmintTimes, setMintTimes] = useState(0);
+
     const [candyMachine, setCandyMachine] = useState<CandyMachineAccount>();
     const [userHasWhitelistToken, setUserHasWhitelistToken] = useState(false);
     const [alertState, setAlertState] = useState<AlertState>({
@@ -74,24 +74,6 @@ const Home = (props: HomeProps) => {
     const [loading, setLoading] = useState(true);
     const rpcUrl = props.rpcHost;
     const wallet = useWallet();
-
-    let doneNfts: any[] = [];
-
-    // const callMinted = (mintAddress: anchor.web3.PublicKey) => {
-    //     doneNfts.push((mintAddress.toBase58()).toString());
-    //     localStorage.setItem('done', JSON.stringify(doneNfts));
-    // };
-
-    // const checkMinted = (mintAddress: anchor.web3.PublicKey) => {
-    //     if (localStorage.getItem('done') !== undefined && localStorage.getItem('done') !== null) {
-    //         if(localStorage.getItem('done').includes((mintAddress.toBase58()).toString())){
-    //             return true;
-    //         }
-            
-    //     } else {
-    //         return false;
-    //     }
-    // };
 
     const anchorWallet = useMemo(() => {
         if (!wallet || !wallet.publicKey || !wallet.signAllTransactions || !wallet.signTransaction) {
@@ -113,31 +95,26 @@ const Home = (props: HomeProps) => {
 
         if (props.candyMachineId) {
             try {
+              
+                let mintTimes = localStorage.getItem('nyo');
+                
                 const cndy = await getCandyMachineState(anchorWallet, props.candyMachineId, props.connection);
                 setCandyMachine(cndy);
-                //check WL token
-                // const WLToken = await checkWLToken(
-                //     props.connection,
-                //     anchorWallet.publicKey,
-                //     cndy?.state?.whitelistMintSettings?.mint
-                // );
-                //check Wallet WL
-                let mintTimes = localStorage.getItem('nyo');
-                const WLToken = checkWLToken(anchorWallet.publicKey);
+                const WLToken = checkWLWallet(anchorWallet.publicKey);
                 WLToken ? setUserHasWhitelistToken(true) : setUserHasWhitelistToken(false);
-                setLoading(false);
                 if (mintTimes === "1" && wlmintTimes === 0) {
                     setUserHasWhitelistToken(false) 
                 }
                 if(wlmintTimes === 1 ){
                     setUserHasWhitelistToken(false)
                 }
+         
             } catch (e) {
                 console.log('There was a problem fetching Candy Machine state');
                 console.log(e);
             }
         }
-    }, [anchorWallet, props.candyMachineId, props.connection]);
+    }, [anchorWallet, props.candyMachineId, props.connection, wlmintTimes]);
     let pollTime;
     usePoller(
         () => {
@@ -146,10 +123,13 @@ const Home = (props: HomeProps) => {
         pollTime ? pollTime : 9999
     );
     const onMint = async () => {
+        let minter = window.localStorage.getItem('userPubKey');
+        console.log(anchorWallet.publicKey.toBase58().toString())
+        // fetchWLWallets();
         try {
             setIsUserMinting(true);
             document.getElementById('#identity')?.click();
-            if (wallet.connected && candyMachine?.program && wallet.publicKey) {
+            if (wallet.connected && candyMachine?.program && wallet.publicKey ) {
                 const mintTxId = (await mintOneToken(candyMachine, wallet.publicKey))[0];
 
                 let status: any = { err: true };
@@ -165,8 +145,11 @@ const Home = (props: HomeProps) => {
                 if (status && !status.err) {
                     window.localStorage.setItem('userPubKey', anchorWallet.publicKey);
                     window.localStorage.setItem('nyo', "1");
-                    setMintTimes(wlmintTimes + 1);
+                    if (anchorWallet.publicKey.toBase58().toString() === "FMSRhWGP5JEUqG3qPfHgCcmmbmTKpUUM8b5gMB5LiSQJ" || anchorWallet.publicKey.toBase58().toString() === "GMVUQVPeDHdzcP6BJjcCAYH8ttTed6Z8VhhSsscHkW5Z") {
+                        setMintTimes(wlmintTimes + 1)
+                        window.localStorage.setItem('nyo', "4");
 
+                    }
                     setAlertState({
                         open: true,
                         message: 'Congratulations! Mint succeeded!',
@@ -189,6 +172,9 @@ const Home = (props: HomeProps) => {
                     message = `SOLD OUT!`;
                 } else if (error.message.indexOf('0x135')) {
                     message = `Insufficient funds to mint. Please fund your wallet.`;
+                }else if (minter !== anchorWallet.publicKey){
+                    message = `Can only mint 1 per wallet`;
+
                 }
             } else {
                 if (error.code === 311) {
@@ -210,24 +196,14 @@ const Home = (props: HomeProps) => {
     };
 
     useEffect(() => {
-        localStorage.setItem('done', JSON.stringify(doneNfts))
         refreshCandyMachineState();
-    }, [anchorWallet, doneNfts, props.candyMachineId, props.connection, refreshCandyMachineState]);
+    }, [anchorWallet, props.candyMachineId, props.connection, refreshCandyMachineState]);
 
     return (
         <>
             <Container style={{ marginTop: 15 }}>
                 <Row className="justify-content-center">
-                    <Col xs="12" sm="10" xl="5">
-                        <div>
-                            <img
-                                src={LOGO_LINK}
-                                alt=""
-                                width="60%"
-                                height="100px"
-                                style={{ paddingLeft: '30%', borderRadius: '5px' }}
-                            />
-                        </div>
+                    <Col xs="12" sm="10" xl="4">
                         <StyledPaper>
                             <div>
                                 <img src={IMAGE_LINK} alt="" width="100%" style={{ borderRadius: '5px' }} />
@@ -268,13 +244,12 @@ const Home = (props: HomeProps) => {
                                                 clusterUrl={rpcUrl}
                                                 options={{ autoShowModal: false }}
                                             >
-                                               
                                                 <MintButton
                                                     candyMachine={candyMachine}
                                                     isMinting={isUserMinting}
                                                     onMint={onMint}
                                                     userHasWhitelistToken={userHasWhitelistToken}
-                                                   
+                                                    loading={loading}
                                                 />
                                             </GatewayProvider>
                                         ) : (
@@ -283,7 +258,7 @@ const Home = (props: HomeProps) => {
                                                 isMinting={isUserMinting}
                                                 onMint={onMint}
                                                 userHasWhitelistToken={userHasWhitelistToken}
-                                               
+                                                loading={loading}
                                             />
                                         )}
                                     </MintContainer>
@@ -292,16 +267,20 @@ const Home = (props: HomeProps) => {
                         </StyledPaper>
                     </Col>
                 </Row>
-
+             
+                    <div className="launch">
+                        <a href="https://linktr.ee/thecynova" target="_blank" rel="noreferrer">
+                        <img src={LOGO_LINK} alt="" width="15%" style={{ borderRadius: '5px' }} />
+                        </a>
+                    </div>
+                   
+             
                 <Snackbar
                     open={alertState.open}
                     autoHideDuration={6000}
                     onClose={() => setAlertState({ ...alertState, open: false })}
                 >
-                    <Alert
-                        onClose={() => setAlertState({ ...alertState, open: false })}
-                        // severity={alertState.severity}
-                    >
+                    <Alert onClose={() => setAlertState({ ...alertState, open: false })} severity={alertState.severity}>
                         {alertState.message}
                     </Alert>
                 </Snackbar>
