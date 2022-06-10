@@ -96,7 +96,7 @@ const Home = (props: HomeProps) => {
         if (props.candyMachineId) {
             try {
               
-                let mintTimes = localStorage.getItem('hgvhgxschg12');
+                let mintTimes = localStorage.getItem('hgvhgxschg12dfdd');
                 
                 const cndy = await getCandyMachineState(anchorWallet, props.candyMachineId, props.connection);
                 setCandyMachine(cndy);
@@ -145,13 +145,8 @@ const Home = (props: HomeProps) => {
               
                 if (status && !status.err) {
                     localStorage.setItem('hgvhgxschg', anchorWallet.publicKey);
-                    localStorage.setItem('hgvhgxschg12', "1");
+                    localStorage.setItem('hgvhgxschg12dfdd', "1");
 
-                    if (anchorWallet.publicKey.toBase58().toString() === "4MtcGoNbYpxbNKPi4F6iivCJzA1k6aSvvd7MwmYeb9PJ" ) {
-                        setMintTimes(wlmintTimes + 1)
-                        localStorage.setItem('hgvhgxschg12', "19");
-
-                    }
                     setAlertState({
                         open: true,
                         message: 'Congratulations! Mint succeeded!',
@@ -159,7 +154,7 @@ const Home = (props: HomeProps) => {
                     });
                 } else {
                     localStorage.setItem('hgvhgxschg', anchorWallet.publicKey);
-                    localStorage.setItem('hgvhgxschg12', "0");
+                    localStorage.setItem('hgvhgxschg12dfdd', "0");
                     setAlertState({
                         open: true,
                         message: 'Mint failed! Please try again!',
