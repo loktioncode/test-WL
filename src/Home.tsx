@@ -210,7 +210,7 @@ const Home = (props: HomeProps) => {
                         <StyledPaper>
                             {!wallet.connected ? (
                                 <ConnectButton>Connect Wallet</ConnectButton>
-                            ) : loading ? (
+                            ) : !userHasWhitelistToken ? (
                                 <div
                                     style={{
                                         display: 'flex',
