@@ -1,7 +1,7 @@
 import {WL} from '../utils/utils'
 
 //check wallets
-  export const checkWLToken = (
+  export const checkWLWallet = (
     userAddress: any,
   ) => {
     try {
