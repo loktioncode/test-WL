@@ -29,7 +29,7 @@ import { GatewayProvider } from '@civic/solana-gateway-react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { usePoller } from './hooks/usePoller';
 
-const IMAGE_LINK = '/mint.png';
+const IMAGE_LINK = '/mint.jpeg';
 const LOGO_LINK = '/cynova-launch.png';
 
 
