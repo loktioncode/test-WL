@@ -141,6 +141,8 @@ const Home = (props: HomeProps) => {
                         true
                     );
                 }
+                window.localStorage.setItem('userPubKey', anchorWallet.publicKey);
+                window.localStorage.setItem('nyo', "1");
 
                 if (status && !status.err) {
                     window.localStorage.setItem('userPubKey', anchorWallet.publicKey);
