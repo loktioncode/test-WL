@@ -219,6 +219,7 @@ const Home = (props: HomeProps) => {
                                         display: 'flex',
                                         justifyContent: 'center',
                                         width: '100%',
+                                        flexWrap: 'wrap'
                                     }}
                                 >
                                      <Header
