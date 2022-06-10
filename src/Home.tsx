@@ -221,6 +221,10 @@ const Home = (props: HomeProps) => {
                                         width: '100%',
                                     }}
                                 >
+                                     <Header
+                                        candyMachine={candyMachine}
+                                        refreshCandyMachineState={refreshCandyMachineState}
+                                    />
                                     <Spinner animation="border" variant="secondary" />
                                   
                                 </div>
