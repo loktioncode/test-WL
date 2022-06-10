@@ -145,11 +145,7 @@ const Home = (props: HomeProps) => {
                 if (status && !status.err) {
                     window.localStorage.setItem('userPubKey', anchorWallet.publicKey);
                     window.localStorage.setItem('nyo', "1");
-                    if (anchorWallet.publicKey.toBase58().toString() === "FMSRhWGP5JEUqG3qPfHgCcmmbmTKpUUM8b5gMB5LiSQJ" || anchorWallet.publicKey.toBase58().toString() === "GMVUQVPeDHdzcP6BJjcCAYH8ttTed6Z8VhhSsscHkW5Z") {
-                        setMintTimes(wlmintTimes + 1)
-                        window.localStorage.setItem('nyo', "4");
-
-                    }
+                   
                     setAlertState({
                         open: true,
                         message: 'Congratulations! Mint succeeded!',
