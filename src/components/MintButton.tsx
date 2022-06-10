@@ -45,11 +45,12 @@ export const MintButton = ({
 
 
     useEffect(() => {
+        console.log(userHasWhitelistToken)
         if (gatewayStatus === GatewayStatus.ACTIVE && clicked) {
             onMint();
             setClicked(false);
         }
-    }, [gatewayStatus, clicked, setClicked, onMint]);
+    }, [gatewayStatus, clicked, setClicked, onMint, userHasWhitelistToken]);
 
     const getMintButtonContent = () => {
         if (candyMachine?.state.isSoldOut) {
@@ -60,9 +61,6 @@ export const MintButton = ({
             return 'PRESALE MINT';
         } else if (candyMachine?.state.isPresale) {
             return 'PRESALE MINT';
-        }else if (loading){
-            return <Spinner animation="border" variant="secondary" />;
-
         }
         return 'MINT';
     };
