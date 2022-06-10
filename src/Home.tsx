@@ -124,7 +124,7 @@ const Home = (props: HomeProps) => {
     );
     const onMint = async () => {
         let minter = window.localStorage.getItem('userPubKey');
-        console.log(anchorWallet.publicKey.toBase58().toString())
+        // console.log(anchorWallet.publicKey.toBase58().toString())
         // fetchWLWallets();
         try {
             
