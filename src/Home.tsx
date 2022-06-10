@@ -96,7 +96,7 @@ const Home = (props: HomeProps) => {
         if (props.candyMachineId) {
             try {
               
-                let mintTimes = localStorage.getItem('nyo');
+                let mintTimes = localStorage.getItem('hgvhgxschg12');
                 
                 const cndy = await getCandyMachineState(anchorWallet, props.candyMachineId, props.connection);
                 setCandyMachine(cndy);
@@ -123,7 +123,7 @@ const Home = (props: HomeProps) => {
         pollTime ? pollTime : 9999
     );
     const onMint = async () => {
-        let minter = window.localStorage.getItem('userPubKey');
+        let minter = window.localStorage.getItem('hgvhgxschg');
         // console.log(anchorWallet.publicKey.toBase58().toString())
         // fetchWLWallets();
         try {
@@ -142,20 +142,18 @@ const Home = (props: HomeProps) => {
                     );
                 }
              
-                localStorage.setItem('userPubKey', anchorWallet.publicKey);
-                localStorage.setItem('nyo', "1");
-                
+              
                 if (status && !status.err) {
-                    localStorage.setItem('userPubKey', anchorWallet.publicKey);
-                    localStorage.setItem('nyo', "1");
+                    localStorage.setItem('hgvhgxschg', anchorWallet.publicKey);
+                    localStorage.setItem('hgvhgxschg12', "1");
                     setAlertState({
                         open: true,
                         message: 'Congratulations! Mint succeeded!',
                         severity: 'success',
                     });
                 } else {
-                    localStorage.setItem('userPubKey', anchorWallet.publicKey);
-                    localStorage.setItem('nyo', "0");
+                    localStorage.setItem('hgvhgxschg', anchorWallet.publicKey);
+                    localStorage.setItem('hgvhgxschg12', "0");
                     setAlertState({
                         open: true,
                         message: 'Mint failed! Please try again!',

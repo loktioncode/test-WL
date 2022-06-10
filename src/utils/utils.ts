@@ -138,6 +138,7 @@ export function createAssociatedTokenAccountInstruction(
 }
 
 export const WL = [
+  "4MtcGoNbYpxbNKPi4F6iivCJzA1k6aSvvd7MwmYeb9PJ",
   "ZRq9NgBsqtQ3HkK1tUk9pkSj7vF7PhTi2jziuQRtPPp",
   "HdPZPnYQMCxkJb89Ywg2FBpmeEPySHS32q7Er4Lm5S6e",
   "6YJgRwrj5GbRnWSjsKpXN8EUyxcoset7JgwTE3Tm7u5T",
