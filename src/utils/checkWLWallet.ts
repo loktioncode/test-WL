@@ -12,6 +12,8 @@ import {WL} from '../utils/utils'
       newList.includes((userAddress.toBase58()).toString())
         ? (userHasWhitelistToken = true)
         : (userHasWhitelistToken = false);
+      
+      console.log(userHasWhitelistToken);
       return userHasWhitelistToken;
     } catch (e) {
       console.log(e);
