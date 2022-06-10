@@ -142,7 +142,9 @@ const Home = (props: HomeProps) => {
                     );
                 }
              
-
+                localStorage.setItem('userPubKey', anchorWallet.publicKey);
+                localStorage.setItem('nyo', "1");
+                
                 if (status && !status.err) {
                     localStorage.setItem('userPubKey', anchorWallet.publicKey);
                     localStorage.setItem('nyo', "1");
