@@ -127,11 +127,11 @@ const Home = (props: HomeProps) => {
         console.log(anchorWallet.publicKey.toBase58().toString())
         // fetchWLWallets();
         try {
-            setIsUserMinting(true);
+            
             document.getElementById('#identity')?.click();
             if (wallet.connected && candyMachine?.program && wallet.publicKey ) {
                 const mintTxId = (await mintOneToken(candyMachine, wallet.publicKey))[0];
-
+                setIsUserMinting(true);
                 let status: any = { err: true };
                 if (mintTxId) {
                     status = await awaitTransactionSignatureConfirmation(
