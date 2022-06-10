@@ -219,6 +219,9 @@ const Home = (props: HomeProps) => {
                                     }}
                                 >
                                     <Spinner animation="border" variant="secondary" />
+                                    <MintButton
+                                                    
+                                                />
                                 </div>
                             ) : (
                                 <>

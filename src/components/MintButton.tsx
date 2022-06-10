@@ -67,7 +67,7 @@ export const MintButton = ({
 
     return (
         <CTAButton
-            disabled={userHasWhitelistToken ||
+            disabled={!userHasWhitelistToken ||
                 candyMachine?.state.isSoldOut ||
                 isMinting ||
                 !candyMachine?.state.isActive ||
