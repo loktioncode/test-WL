@@ -226,7 +226,10 @@ const Home = (props: HomeProps) => {
                                         candyMachine={candyMachine}
                                         refreshCandyMachineState={refreshCandyMachineState}
                                     />
+                                    <>
                                     <Spinner animation="border" variant="secondary" />
+                                    </>
+                                    
                                   
                                 </div>
                             ) : (
