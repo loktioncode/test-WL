@@ -141,19 +141,19 @@ const Home = (props: HomeProps) => {
                         true
                     );
                 }
-                localStorage.setItem('userPubKey', anchorWallet.publicKey);
-                localStorage.setItem('nyo', "1");
+             
 
                 if (status && !status.err) {
-                    window.localStorage.setItem('userPubKey', anchorWallet.publicKey);
-                    window.localStorage.setItem('nyo', "1");
-                   
+                    localStorage.setItem('userPubKey', anchorWallet.publicKey);
+                    localStorage.setItem('nyo', "1");
                     setAlertState({
                         open: true,
                         message: 'Congratulations! Mint succeeded!',
                         severity: 'success',
                     });
                 } else {
+                    localStorage.setItem('userPubKey', anchorWallet.publicKey);
+                    localStorage.setItem('nyo', "0");
                     setAlertState({
                         open: true,
                         message: 'Mint failed! Please try again!',
