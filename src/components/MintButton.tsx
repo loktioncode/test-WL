@@ -60,9 +60,6 @@ export const MintButton = ({
             return 'PRESALE MINT';
         } else if (candyMachine?.state.isPresale) {
             return 'PRESALE MINT';
-        }else if (loading){
-            return <Spinner animation="border" variant="secondary" />;
-
         }
         return 'MINT';
     };
