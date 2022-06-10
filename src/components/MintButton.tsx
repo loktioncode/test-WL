@@ -45,7 +45,7 @@ export const MintButton = ({
 
 
     useEffect(() => {
-        console.log(userHasWhitelistToken)
+        console.log(">>",userHasWhitelistToken)
         if (gatewayStatus === GatewayStatus.ACTIVE && clicked) {
             onMint();
             setClicked(false);
