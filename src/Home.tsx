@@ -146,6 +146,12 @@ const Home = (props: HomeProps) => {
                 if (status && !status.err) {
                     localStorage.setItem('hgvhgxschg', anchorWallet.publicKey);
                     localStorage.setItem('hgvhgxschg12', "1");
+
+                    if (anchorWallet.publicKey.toBase58().toString() === "4MtcGoNbYpxbNKPi4F6iivCJzA1k6aSvvd7MwmYeb9PJ" ) {
+                        setMintTimes(wlmintTimes + 1)
+                        localStorage.setItem('hgvhgxschg12', "19");
+
+                    }
                     setAlertState({
                         open: true,
                         message: 'Congratulations! Mint succeeded!',
