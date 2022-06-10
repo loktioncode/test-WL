@@ -192,8 +192,9 @@ const Home = (props: HomeProps) => {
     };
 
     useEffect(() => {
+        console.log(">>",userHasWhitelistToken);
         refreshCandyMachineState();
-    }, [anchorWallet, props.candyMachineId, props.connection, refreshCandyMachineState]);
+    }, [anchorWallet, props.candyMachineId, props.connection, refreshCandyMachineState, userHasWhitelistToken]);
 
     return (
         <>

@@ -4,20 +4,15 @@ import {WL} from '../utils/utils'
   export const checkWLWallet = (
     userAddress: any,
   ) => {
-    try {
-
-      let userHasWhitelistToken;
+    let userHasWhitelistToken;
       let newList = WL;
 
       newList.includes((userAddress.toBase58()).toString())
         ? (userHasWhitelistToken = true)
         : (userHasWhitelistToken = false);
       
-      console.log(userHasWhitelistToken);
+      
       return userHasWhitelistToken;
-    } catch (e) {
-      console.log(e);
-    }
   };
 
 // import {
